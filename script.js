@@ -42,6 +42,17 @@
       const href = a.getAttribute("href") || "";
       if (!href.startsWith("#")) return;
       e.preventDefault();
+
+      // CTA click tracking (hero/header/footer buttons with data-cta)
+      const ctaId = a.getAttribute("data-cta");
+      if (ctaId && typeof window.gtag === "function") {
+        window.gtag("event", "cta_click", {
+          event_category: "engagement",
+          cta_id: ctaId,
+          link_url: href,
+        });
+      }
+
       scrollToHash(href);
 
       // Close mobile menu if open

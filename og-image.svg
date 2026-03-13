@@ -1,0 +1,175 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#060B1A"/>
+      <stop offset="50%" stop-color="#101b3b"/>
+      <stop offset="100%" stop-color="#041014"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4DA3FF"/>
+      <stop offset="50%" stop-color="#7C5CFF"/>
+      <stop offset="100%" stop-color="#2EE59D"/>
+    </linearGradient>
+    <linearGradient id="barGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2EE59D"/>
+      <stop offset="100%" stop-color="#4DA3FF"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Soft gradient blobs -->
+  <circle cx="150" cy="120" r="260" fill="#4DA3FF" fill-opacity="0.20"/>
+  <circle cx="980" cy="140" r="240" fill="#7C5CFF" fill-opacity="0.18"/>
+  <circle cx="700" cy="520" r="260" fill="#2EE59D" fill-opacity="0.16"/>
+
+  <!-- Subtle grid -->
+  <g stroke="#FFFFFF" stroke-opacity="0.06" stroke-width="1">
+    <!-- vertical lines -->
+    <line x1="200" y1="40" x2="200" y2="590"/>
+    <line x1="350" y1="40" x2="350" y2="590"/>
+    <line x1="500" y1="40" x2="500" y2="590"/>
+    <line x1="650" y1="40" x2="650" y2="590"/>
+    <line x1="800" y1="40" x2="800" y2="590"/>
+    <line x1="950" y1="40" x2="950" y2="590"/>
+    <!-- horizontal lines -->
+    <line x1="120" y1="110" x2="1080" y2="110"/>
+    <line x1="120" y1="220" x2="1080" y2="220"/>
+    <line x1="120" y1="330" x2="1080" y2="330"/>
+    <line x1="120" y1="440" x2="1080" y2="440"/>
+    <line x1="120" y1="550" x2="1080" y2="550"/>
+  </g>
+
+  <!-- Brand pill -->
+  <g transform="translate(120, 80)">
+    <rect x="0" y="0" rx="18" ry="18" width="240" height="40"
+          fill="#FFFFFF" fill-opacity="0.06" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="1"/>
+    <circle cx="26" cy="20" r="6" fill="#2EE59D"/>
+    <circle cx="26" cy="20" r="12" fill="#2EE59D" fill-opacity="0.12"/>
+    <text x="48" y="25" fill="#E5ECFF" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+          font-size="16" font-weight="500" letter-spacing="0.02em">
+      PRIORITYAI · FINTECH
+    </text>
+  </g>
+
+  <!-- Main headline -->
+  <text x="120" y="190"
+        fill="#FFFFFF"
+        font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="52" font-weight="800" letter-spacing="-0.04em">
+    Don't wait for delinquency.
+  </text>
+  <text x="120" y="255"
+        fill="url(#accentGrad)"
+        font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="58" font-weight="900" letter-spacing="-0.05em">
+    Win the repayment priority.
+  </text>
+
+  <!-- Subheadline -->
+  <text x="120" y="315"
+        fill="#D5DDF5"
+        font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="22" font-weight="400">
+    AI analyzes borrower repayment strategies and simulates incentives
+  </text>
+  <text x="120" y="345"
+        fill="#D5DDF5"
+        font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="22" font-weight="400">
+    to move your loans to repayment priority #1.
+  </text>
+
+  <!-- Right-side priority card -->
+  <g transform="translate(720, 200)">
+    <rect x="0" y="0" rx="24" ry="24" width="340" height="260"
+          fill="#050914" fill-opacity="0.9"
+          stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="1.5"/>
+
+    <!-- window dots -->
+    <circle cx="26" cy="26" r="5" fill="#FF5C7A" fill-opacity="0.9"/>
+    <circle cx="46" cy="26" r="5" fill="#FFD166" fill-opacity="0.9"/>
+    <circle cx="66" cy="26" r="5" fill="#2EE59D" fill-opacity="0.9"/>
+
+    <!-- title -->
+    <text x="92" y="32"
+          fill="#C8D3FF"
+          font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+          font-size="16" font-weight="600">
+      Repayment priority simulation
+    </text>
+
+    <!-- bars -->
+    <g transform="translate(32, 70)">
+      <!-- Competitor A -->
+      <text x="0" y="0" fill="#9BA4D8"
+            font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-size="14">Competitor A</text>
+      <rect x="0" y="12" rx="8" ry="8" width="260" height="14" fill="#1A2340"/>
+      <rect x="0" y="12" rx="8" ry="8" width="180" height="14" fill="#3D4F7A"/>
+
+      <!-- Competitor B -->
+      <text x="0" y="56" fill="#9BA4D8"
+            font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-size="14">Competitor B</text>
+      <rect x="0" y="68" rx="8" ry="8" width="260" height="14" fill="#1A2340"/>
+      <rect x="0" y="68" rx="8" ry="8" width="150" height="14" fill="#3D4F7A"/>
+
+      <!-- Your institution (highlight) -->
+      <text x="0" y="112" fill="#F4F7FF"
+            font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-size="14" font-weight="600">Your institution</text>
+      <rect x="0" y="124" rx="8" ry="8" width="260" height="14" fill="#1A2340"/>
+      <rect x="0" y="124" rx="8" ry="8" width="230" height="14" fill="url(#barGrad)"/>
+
+      <!-- % labels -->
+      <text x="270" y="24" fill="#808AC4"
+            font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-size="13">72%</text>
+      <text x="270" y="80" fill="#808AC4"
+            font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-size="13">58%</text>
+      <text x="270" y="136" fill="#E9FEFF"
+            font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-size="13" font-weight="600">86%</text>
+    </g>
+
+    <!-- bottom chips -->
+    <g transform="translate(32, 210)">
+      <rect x="0" y="0" rx="999" ry="999" width="138" height="30"
+            fill="#111A33" stroke="#3C508F" stroke-width="1"/>
+      <text x="16" y="20" fill="#C4D0FF"
+            font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-size="13">AI incentives</text>
+
+      <rect x="152" y="0" rx="999" ry="999" width="144" height="30"
+            fill="#111A33" stroke="#3C508F" stroke-width="1"/>
+      <text x="168" y="20" fill="#C4D0FF"
+            font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-size="13">Behavior signals</text>
+    </g>
+  </g>
+
+  <!-- Bottom metrics -->
+  <g transform="translate(120, 410)">
+    <rect x="0" y="0" rx="18" ry="18" width="260" height="90"
+          fill="#050914" fill-opacity="0.85" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="1"/>
+    <text x="22" y="40" fill="#FFFFFF"
+          font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+          font-size="30" font-weight="800">+15pp</text>
+    <text x="22" y="63" fill="#A7B2E6"
+          font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+          font-size="14">repayment priority share</text>
+
+    <rect x="290" y="0" rx="18" ry="18" width="260" height="90"
+          fill="#050914" fill-opacity="0.85" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="1"/>
+    <text x="312" y="40" fill="#FFFFFF"
+          font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+          font-size="30" font-weight="800">+25%</text>
+    <text x="312" y="63" fill="#A7B2E6"
+          font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+          font-size="14">cure rate improvement</text>
+  </g>
+</svg>
+

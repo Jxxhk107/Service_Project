@@ -7,6 +7,27 @@
     <title>Repayment Priority AI | PoC Landing</title>
     <link rel="stylesheet" href="style.css" />
 
+    <!-- Basic SEO -->
+    <meta name="robots" content="index,follow" />
+    <!-- TODO: 실제 배포 도메인으로 교체 -->
+    <link rel="canonical" href="https://your-domain.com/" />
+
+    <!-- Open Graph (for social / link previews) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="PriorityAI" />
+    <meta property="og:title" content="Win the repayment priority | PriorityAI" />
+    <meta property="og:description" content="AI-driven repayment behavior optimization that moves your loans to repayment priority #1 for multi-debt borrowers." />
+    <meta property="og:url" content="https://your-domain.com/" />
+    <meta property="og:image" content="https://your-domain.com/og-image.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Win the repayment priority | PriorityAI" />
+    <meta name="twitter:description" content="Influence borrower repayment behavior with AI-driven incentive simulations. Apply for a PoC with PriorityAI." />
+    <meta name="twitter:image" content="https://your-domain.com/og-image.svg" />
+
     <!-- GA4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-NM48CKSRSB"></script>
     <script>
@@ -46,8 +67,8 @@
         </nav>
 
         <div class="header-cta">
-          <a class="btn btn-ghost btn-sm" href="#cta" data-scroll>Request Demo</a>
-          <a class="btn btn-primary btn-sm" href="#cta" data-scroll>Apply for PoC</a>
+          <a class="btn btn-ghost btn-sm" href="#cta" data-scroll data-cta="header_request_demo">Request Demo</a>
+          <a class="btn btn-primary btn-sm" href="#cta" data-scroll data-cta="header_apply_poc">Apply for PoC</a>
         </div>
       </div>
     </header>
@@ -72,8 +93,8 @@
             </p>
 
             <div class="hero-actions">
-              <a class="btn btn-primary" href="#cta" data-scroll>Apply for PoC</a>
-              <a class="btn btn-ghost" href="#cta" data-scroll>Request Demo</a>
+              <a class="btn btn-primary" href="#cta" data-scroll data-cta="hero_apply_poc">Apply for PoC</a>
+              <a class="btn btn-ghost" href="#cta" data-scroll data-cta="hero_request_demo">Request Demo</a>
             </div>
 
             <div class="hero-metrics" aria-label="Key outcomes">
@@ -474,7 +495,7 @@
           <a class="footer-link" href="#problem" data-scroll>Problem</a>
           <a class="footer-link" href="#solution" data-scroll>Solution</a>
           <a class="footer-link" href="#features" data-scroll>Features</a>
-          <a class="footer-link" href="#cta" data-scroll>Apply</a>
+          <a class="footer-link" href="#cta" data-scroll data-cta="footer_apply_poc">Apply</a>
         </div>
       </div>
       <div class="container footer-bottom">
