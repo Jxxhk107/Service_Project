@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+
+# Secrets (never commit)
+.env
+
+# Cursor/IDE (optional noise)
+.cursor/
