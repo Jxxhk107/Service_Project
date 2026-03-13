@@ -497,39 +497,76 @@
           </div>
 
           <div class="cta-form-wrap">
-            <form class="form" id="pocForm" novalidate>
+            <form class="form" id="pocForm" method="POST" action="https://formspree.io/f/mlgpnvgk" novalidate>
               <div class="form-head">
                 <div class="form-title">PoC application</div>
                 <div class="form-subtitle">We respond within 2 business days.</div>
               </div>
 
+              <!-- Hidden metadata for attribution & debugging -->
+              <input type="hidden" name="intent" id="intent" value="poc" />
+              <input type="hidden" name="cta_source" id="ctaSource" value="" />
+              <input type="hidden" name="page_url" id="pageUrl" value="" />
+              <input type="hidden" name="referrer" id="referrer" value="" />
+              <input type="hidden" name="utm_source" id="utmSource" value="" />
+              <input type="hidden" name="utm_medium" id="utmMedium" value="" />
+              <input type="hidden" name="utm_campaign" id="utmCampaign" value="" />
+              <input type="hidden" name="utm_content" id="utmContent" value="" />
+              <input type="hidden" name="utm_term" id="utmTerm" value="" />
+              <input type="hidden" name="submitted_at" id="submittedAt" value="" />
+
+              <!-- Honeypot (spam trap). Humans should keep this empty. -->
+              <div class="field hp-field" aria-hidden="true">
+                <label for="website">Website</label>
+                <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+              </div>
+
               <div class="field">
                 <label for="institutionName">Institution Name</label>
-                <input id="institutionName" name="institutionName" type="text" autocomplete="organization" placeholder="e.g., Acme Bank" required />
+                <input id="institutionName" name="institution_name" type="text" autocomplete="organization" placeholder="e.g., Acme Bank" required />
+                <div class="field-error" aria-live="polite"></div>
+              </div>
+
+              <div class="field">
+                <label for="contactName">Contact Name <span class="muted">(optional)</span></label>
+                <input id="contactName" name="contact_name" type="text" autocomplete="name" placeholder="e.g., J. Kim" />
                 <div class="field-error" aria-live="polite"></div>
               </div>
 
               <div class="field">
                 <label for="portfolioSize">Loan Portfolio Size</label>
-                <input id="portfolioSize" name="portfolioSize" type="text" inputmode="numeric" placeholder="e.g., 250,000,000 (or 250M)" required />
+                <input id="portfolioSize" name="loan_portfolio_size" type="text" inputmode="numeric" placeholder="e.g., 250,000,000 (or 250M)" required />
                 <div class="field-hint">Enter a number or an approximate size (e.g., 250M).</div>
                 <div class="field-error" aria-live="polite"></div>
               </div>
 
               <div class="field">
                 <label for="delinquencyRate">Current Delinquency Rate</label>
-                <input id="delinquencyRate" name="delinquencyRate" type="text" inputmode="decimal" placeholder="e.g., 2.4%" required />
+                <input id="delinquencyRate" name="current_delinquency_rate" type="text" inputmode="decimal" placeholder="e.g., 2.4%" required />
                 <div class="field-hint">Use percent (e.g., 2.4%).</div>
                 <div class="field-error" aria-live="polite"></div>
               </div>
 
               <div class="field">
                 <label for="contactEmail">Contact Email</label>
-                <input id="contactEmail" name="contactEmail" type="email" autocomplete="email" placeholder="name@institution.com" required />
+                <input id="contactEmail" name="contact_email" type="email" autocomplete="email" placeholder="name@institution.com" required />
                 <div class="field-error" aria-live="polite"></div>
               </div>
 
-              <button class="btn btn-primary btn-block" type="submit">Apply for PoC</button>
+              <div class="field">
+                <label for="notes">Notes <span class="muted">(optional)</span></label>
+                <textarea id="notes" name="notes" rows="3" placeholder="What do you want to validate in the PoC? (priority shift, cure lift, segment focus, etc.)"></textarea>
+                <div class="field-error" aria-live="polite"></div>
+              </div>
+
+              <button class="btn btn-primary btn-block" type="submit" id="submitBtn" data-default-text="Apply for PoC">
+                Apply for PoC
+              </button>
+
+              <div class="form-error" id="formError" role="status" aria-live="polite" hidden>
+                <div class="error-title">Submission failed.</div>
+                <div class="error-text">Please try again in a moment, or contact us directly.</div>
+              </div>
 
               <div class="form-success" id="formSuccess" role="status" aria-live="polite" hidden>
                 <div class="success-title">Application received.</div>
@@ -537,7 +574,7 @@
               </div>
 
               <p class="fineprint">
-                By submitting, you agree to be contacted about this PoC. (No data is sent anywhere in this MVP.)
+                By submitting, you agree to be contacted about this request. Your information will be sent to our form inbox for follow-up.
               </p>
             </form>
           </div>

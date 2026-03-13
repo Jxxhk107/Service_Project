@@ -45,6 +45,41 @@
     } catch (_e) {}
   }
 
+  // ---------- Attribution helpers ----------
+  const intentEl = $("#intent");
+  const ctaSourceEl = $("#ctaSource");
+  const pageUrlEl = $("#pageUrl");
+  const referrerEl = $("#referrer");
+  const utmSourceEl = $("#utmSource");
+  const utmMediumEl = $("#utmMedium");
+  const utmCampaignEl = $("#utmCampaign");
+  const utmContentEl = $("#utmContent");
+  const utmTermEl = $("#utmTerm");
+  const submittedAtEl = $("#submittedAt");
+
+  function setAttributionFromUrl() {
+    const params = new URLSearchParams(window.location.search || "");
+    if (pageUrlEl) pageUrlEl.value = window.location.href;
+    if (referrerEl) referrerEl.value = document.referrer || "";
+    if (utmSourceEl) utmSourceEl.value = params.get("utm_source") || "";
+    if (utmMediumEl) utmMediumEl.value = params.get("utm_medium") || "";
+    if (utmCampaignEl) utmCampaignEl.value = params.get("utm_campaign") || "";
+    if (utmContentEl) utmContentEl.value = params.get("utm_content") || "";
+    if (utmTermEl) utmTermEl.value = params.get("utm_term") || "";
+  }
+
+  function inferIntentFromCta(ctaId) {
+    const id = String(ctaId || "").toLowerCase();
+    return id.includes("demo") ? "demo" : "poc";
+  }
+
+  function setCtaSource(ctaId) {
+    if (ctaSourceEl) ctaSourceEl.value = ctaId || "";
+    if (intentEl) intentEl.value = inferIntentFromCta(ctaId);
+  }
+
+  setAttributionFromUrl();
+
   // ---------- Smooth scrolling ----------
   // Uses [data-scroll] to avoid hijacking all anchor links globally.
   $$("#main a[data-scroll], header a[data-scroll], footer a[data-scroll]").forEach((a) => {
@@ -55,12 +90,9 @@
 
       // CTA click tracking (hero/header/footer buttons with data-cta)
       const ctaId = a.getAttribute("data-cta");
-      if (ctaId && typeof window.gtag === "function") {
-        window.gtag("event", "cta_click", {
-          event_category: "engagement",
-          cta_id: ctaId,
-          link_url: href,
-        });
+      if (ctaId) {
+        setCtaSource(ctaId);
+        trackEvent("cta_click", { event_category: "engagement", cta_id: ctaId, link_url: href });
       }
 
       scrollToHash(href);
@@ -125,9 +157,12 @@
     closeMobileMenu();
   });
 
-  // ---------- Form validation ----------
+  // ---------- Form validation + submission ----------
   const form = $("#pocForm");
   const successBox = $("#formSuccess");
+  const errorBox = $("#formError");
+  const submitBtn = $("#submitBtn");
+  const honeypot = $("#website");
 
   function setFieldError(inputEl, message) {
     const field = inputEl.closest(".field");
@@ -139,7 +174,7 @@
 
   function clearAllErrors() {
     if (!form) return;
-    $$("input", form).forEach((input) => setFieldError(input, ""));
+    $$("input, textarea", form).forEach((input) => setFieldError(input, ""));
   }
 
   function normalizeNumberLike(text) {
@@ -187,9 +222,11 @@
     let ok = true;
 
     const institution = $("#institutionName");
+    const contactName = $("#contactName");
     const portfolio = $("#portfolioSize");
     const delinquency = $("#delinquencyRate");
     const email = $("#contactEmail");
+    const notes = $("#notes");
 
     if (institution) {
       const v = institution.value.trim();
@@ -197,6 +234,11 @@
         setFieldError(institution, "Please enter your institution name.");
         ok = false;
       } else setFieldError(institution, "");
+    }
+
+    if (contactName) {
+      // Optional
+      setFieldError(contactName, "");
     }
 
     if (portfolio) {
@@ -220,25 +262,12 @@
       } else setFieldError(email, "");
     }
 
-    return ok;
-  }
-
-  function trackFormSubmitAnalytics() {
-    try {
-      // GA4 custom event
-      if (typeof window.gtag === "function") {
-        window.gtag("event", "poc_form_submitted", {
-          event_category: "engagement",
-          event_label: "PoC application",
-        });
-      }
-      // Hotjar event
-      if (typeof window.hj === "function") {
-        window.hj("event", "poc_form_submitted");
-      }
-    } catch (_e) {
-      // Analytics should never break UX; ignore errors silently.
+    if (notes) {
+      // Optional
+      setFieldError(notes, "");
     }
+
+    return ok;
   }
 
   // ---------- Borrower UI preview (hotspots + view tracking) ----------
@@ -296,11 +325,66 @@
     successBox.hidden = true;
   }
 
+  function showError(message) {
+    if (!errorBox) return;
+    const text = $(".error-text", errorBox);
+    if (text && message) text.textContent = message;
+    errorBox.hidden = false;
+  }
+
+  function hideError() {
+    if (!errorBox) return;
+    errorBox.hidden = true;
+  }
+
+  function setSubmitting(isSubmitting) {
+    if (!submitBtn) return;
+    submitBtn.disabled = Boolean(isSubmitting);
+    const defaultText = submitBtn.getAttribute("data-default-text") || "Submit";
+    submitBtn.textContent = isSubmitting ? "Submitting..." : defaultText;
+  }
+
+  async function submitToFormspree(payload, endpoint) {
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    let data = null;
+    try {
+      data = await res.json();
+    } catch (_e) {}
+
+    if (!res.ok) {
+      const msg = (data && (data.error || data.message)) || "Network error. Please try again.";
+      throw new Error(msg);
+    }
+
+    return data;
+  }
+
   if (form) {
+    // If user lands directly without clicking a CTA, keep the default intent as PoC.
+    if (intentEl && !intentEl.value) intentEl.value = "poc";
+
+    // Track "form started" once
+    let started = false;
+    const startOnce = () => {
+      if (started) return;
+      started = true;
+      trackEvent("poc_form_started", { event_category: "engagement" });
+    };
+
     // Live validation: clear error as user types
-    $$("input", form).forEach((input) => {
+    $$("input, textarea", form).forEach((input) => {
       input.addEventListener("input", () => {
         hideSuccess();
+        hideError();
+        startOnce();
         // Re-validate just this field (lightweight)
         if (input.id === "contactEmail") {
           setFieldError(input, input.value.trim() && !isValidEmail(input.value) ? "Please enter a valid email address." : "");
@@ -318,27 +402,67 @@
           );
         } else if (input.id === "institutionName") {
           setFieldError(input, input.value.trim() && input.value.trim().length < 2 ? "Please enter your institution name." : "");
+        } else {
+          setFieldError(input, "");
         }
       });
     });
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       hideSuccess();
+      hideError();
 
       clearAllErrors();
       const ok = validate();
       if (!ok) {
         // Focus first invalid field for better conversion UX
-        const firstInvalid = $(".field.is-invalid input", form);
+        const firstInvalid = $(".field.is-invalid input, .field.is-invalid textarea", form);
         if (firstInvalid) firstInvalid.focus();
+        trackEvent("poc_form_submit_failed", { event_category: "engagement", reason: "validation" });
         return;
       }
 
-      // MVP: no network request. Treat as successful submission.
-      trackFormSubmitAnalytics();
-      showSuccess();
-      form.reset();
+      // Honeypot filled => treat as spam, pretend success without sending
+      if (honeypot && honeypot.value.trim()) {
+        showSuccess();
+        form.reset();
+        setAttributionFromUrl();
+        return;
+      }
+
+      // Fill timestamp just-in-time
+      if (submittedAtEl) submittedAtEl.value = new Date().toISOString();
+      if (pageUrlEl && !pageUrlEl.value) pageUrlEl.value = window.location.href;
+      if (referrerEl && !referrerEl.value) referrerEl.value = document.referrer || "";
+
+      const fd = new FormData(form);
+      const payload = {};
+      fd.forEach((value, key) => {
+        payload[key] = String(value);
+      });
+      if (!payload.intent) payload.intent = "poc";
+
+      setSubmitting(true);
+      try {
+        const endpoint = form.getAttribute("action") || "https://formspree.io/f/mlgpnvgk";
+        await submitToFormspree(payload, endpoint);
+
+        trackEvent("poc_form_submitted", {
+          event_category: "engagement",
+          intent: payload.intent,
+          cta_source: payload.cta_source || "",
+        });
+
+        showSuccess();
+        form.reset();
+        setAttributionFromUrl(); // restore url/referrer/utm after reset
+      } catch (err) {
+        trackEvent("poc_form_submit_failed", { event_category: "engagement", reason: "network" });
+        showError((err && err.message) || "Submission failed. Please try again.");
+      } finally {
+        setSubmitting(false);
+      }
     });
   }
 })();

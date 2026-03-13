@@ -944,10 +944,30 @@ input {
   outline: none;
   transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
 }
+.field textarea {
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--text);
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  resize: vertical;
+  min-height: 96px;
+}
 .field input::placeholder {
   color: rgba(255, 255, 255, 0.45);
 }
+.field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
 .field input:focus {
+  border-color: rgba(77, 163, 255, 0.55);
+  box-shadow: 0 0 0 4px rgba(77, 163, 255, 0.16);
+  background: rgba(0, 0, 0, 0.24);
+}
+.field textarea:focus {
   border-color: rgba(77, 163, 255, 0.55);
   box-shadow: 0 0 0 4px rgba(77, 163, 255, 0.16);
   background: rgba(0, 0, 0, 0.24);
@@ -967,6 +987,29 @@ input {
 .field.is-invalid input {
   border-color: rgba(255, 92, 122, 0.65);
   box-shadow: 0 0 0 4px rgba(255, 92, 122, 0.14);
+}
+.field.is-invalid textarea {
+  border-color: rgba(255, 92, 122, 0.65);
+  box-shadow: 0 0 0 4px rgba(255, 92, 122, 0.14);
+}
+
+.hp-field {
+  display: none;
+}
+
+.form-error {
+  margin-top: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 92, 122, 0.22);
+  background: rgba(255, 92, 122, 0.08);
+  padding: 12px;
+}
+.error-title {
+  font-weight: 950;
+}
+.error-text {
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.80);
 }
 
 .form-success {
