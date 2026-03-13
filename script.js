@@ -35,6 +35,16 @@
   const yearEl = $("#year");
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
+  // ---------- Analytics helpers ----------
+  function trackEvent(name, params) {
+    try {
+      if (typeof window.gtag === "function") window.gtag("event", name, params || {});
+    } catch (_e) {}
+    try {
+      if (typeof window.hj === "function") window.hj("event", name);
+    } catch (_e) {}
+  }
+
   // ---------- Smooth scrolling ----------
   // Uses [data-scroll] to avoid hijacking all anchor links globally.
   $$("#main a[data-scroll], header a[data-scroll], footer a[data-scroll]").forEach((a) => {
@@ -228,6 +238,45 @@
       }
     } catch (_e) {
       // Analytics should never break UX; ignore errors silently.
+    }
+  }
+
+  // ---------- Borrower UI preview (hotspots + view tracking) ----------
+  const uiPreview = $("#ui-preview");
+  if (uiPreview) {
+    const hotspots = $$("[data-ui-hotspot]", uiPreview);
+    const cards = $$("[data-ui-card]", uiPreview);
+
+    function setActive(key) {
+      hotspots.forEach((h) => h.classList.toggle("is-active", h.getAttribute("data-ui-hotspot") === key));
+      cards.forEach((c) => c.classList.toggle("is-active", c.getAttribute("data-ui-card") === key));
+    }
+
+    hotspots.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const key = btn.getAttribute("data-ui-hotspot");
+        if (!key) return;
+        setActive(key);
+        trackEvent("ui_preview_hotspot_click", { event_category: "engagement", hotspot: key });
+      });
+    });
+
+    // Track when this section is seen (once)
+    let viewed = false;
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0];
+          if (!entry) return;
+          if (entry.isIntersecting && !viewed) {
+            viewed = true;
+            trackEvent("ui_preview_viewed", { event_category: "engagement" });
+            io.disconnect();
+          }
+        },
+        { threshold: 0.35 }
+      );
+      io.observe(uiPreview);
     }
   }
 

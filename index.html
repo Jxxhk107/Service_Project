@@ -226,6 +226,72 @@
                 Transaction & liquidity signals
               </div>
             </div>
+
+            <!-- Borrower UI preview (toss.im-style: show, then explain) -->
+            <div class="ui-preview" id="ui-preview" aria-label="Borrower mobile UI preview">
+              <div class="ui-preview-head">
+                <div class="ui-preview-title">Borrower experience preview</div>
+                <div class="ui-preview-subtitle">
+                  What multi-debt borrowers see first — translated into measurable priority shifts for your institution.
+                </div>
+              </div>
+
+              <div class="ui-preview-grid">
+                <div class="ui-screen" aria-label="Borrower first screen (placeholder)">
+                  <div class="ui-screen-frame">
+                    <img
+                      class="ui-screen-img"
+                      src="assets/borrower-first-screen.png"
+                      alt="Borrower app first screen showing portfolio KPIs, repayment priority recommendation, and AI insight cards."
+                      loading="lazy"
+                      decoding="async"
+                    />
+
+                    <!-- Hotspots: click to highlight the matching explanation -->
+                    <button class="hotspot" type="button" data-ui-hotspot="kpi" style="top: 20%; left: 26%;" aria-label="Highlight KPI summary"></button>
+                    <button class="hotspot" type="button" data-ui-hotspot="priority" style="top: 44%; left: 62%;" aria-label="Highlight repayment priority recommendation"></button>
+                    <button class="hotspot" type="button" data-ui-hotspot="ai" style="top: 74%; left: 36%;" aria-label="Highlight AI insight and next action"></button>
+                  </div>
+
+                  <div class="ui-screen-caption">
+                    Tap the highlights to see what each UI element means for recovery outcomes.
+                  </div>
+                </div>
+
+                <div class="ui-explain" aria-label="Explanation cards">
+                  <div class="ui-card is-active" data-ui-card="kpi">
+                    <div class="ui-card-title">Decision-ready summary</div>
+                    <div class="ui-card-text">
+                      Borrowers see a simple snapshot (total debt, DPD, repayability) that turns complexity into an actionable plan.
+                    </div>
+                    <div class="ui-card-meta">Outcome: higher engagement and clearer repayment intent signals.</div>
+                  </div>
+
+                  <div class="ui-card" data-ui-card="priority">
+                    <div class="ui-card-title">Repayment priority guidance</div>
+                    <div class="ui-card-text">
+                      The experience is designed to shift which lender gets repaid first — not after delinquency, but before it starts.
+                    </div>
+                    <div class="ui-card-meta">Outcome: +15pp repayment priority share (PoC target).</div>
+                  </div>
+
+                  <div class="ui-card" data-ui-card="ai">
+                    <div class="ui-card-title">AI insight → next-best action</div>
+                    <div class="ui-card-text">
+                      Incentives are not random. We simulate cost/impact trade-offs to recommend the next offer or nudge.
+                    </div>
+                    <div class="ui-card-meta">Outcome: improved cure & recovery with controlled cost.</div>
+                  </div>
+
+                  <div class="ui-mini-cta">
+                    <a class="btn btn-ghost btn-block" href="#cta" data-scroll data-cta="ui_preview_apply_poc">
+                      Apply for PoC (see data requirements)
+                    </a>
+                    <div class="ui-mini-note muted">We’ll validate shift rate, cure lift, and recovery lift on a portfolio subset.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="panel" aria-label="Simulation preview">
