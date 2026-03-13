@@ -231,7 +231,7 @@
     if (institution) {
       const v = institution.value.trim();
       if (v.length < 2) {
-        setFieldError(institution, "Please enter your institution name.");
+        setFieldError(institution, "기관명을 입력해 주세요.");
         ok = false;
       } else setFieldError(institution, "");
     }
@@ -243,21 +243,21 @@
 
     if (portfolio) {
       if (!isValidPortfolioSize(portfolio.value)) {
-        setFieldError(portfolio, "Please enter a valid portfolio size (e.g., 250M or 250,000,000).");
+        setFieldError(portfolio, "올바른 포트폴리오 규모를 입력해 주세요(예: 250M 또는 250,000,000).");
         ok = false;
       } else setFieldError(portfolio, "");
     }
 
     if (delinquency) {
       if (!isValidDelinquencyRate(delinquency.value)) {
-        setFieldError(delinquency, "Please enter a valid delinquency rate between 0 and 100 (e.g., 2.4%).");
+        setFieldError(delinquency, "0에서 100 사이의 연체율을 입력해 주세요(예: 2.4%).");
         ok = false;
       } else setFieldError(delinquency, "");
     }
 
     if (email) {
       if (!isValidEmail(email.value)) {
-        setFieldError(email, "Please enter a valid email address.");
+        setFieldError(email, "올바른 이메일 주소를 입력해 주세요.");
         ok = false;
       } else setFieldError(email, "");
     }
@@ -340,8 +340,8 @@
   function setSubmitting(isSubmitting) {
     if (!submitBtn) return;
     submitBtn.disabled = Boolean(isSubmitting);
-    const defaultText = submitBtn.getAttribute("data-default-text") || "Submit";
-    submitBtn.textContent = isSubmitting ? "Submitting..." : defaultText;
+    const defaultText = submitBtn.getAttribute("data-default-text") || "제출";
+    submitBtn.textContent = isSubmitting ? "전송 중..." : defaultText;
   }
 
   async function submitToFormspree(payload, endpoint) {
@@ -360,7 +360,7 @@
     } catch (_e) {}
 
     if (!res.ok) {
-      const msg = (data && (data.error || data.message)) || "Network error. Please try again.";
+      const msg = (data && (data.error || data.message)) || "네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.";
       throw new Error(msg);
     }
 
@@ -387,21 +387,21 @@
         startOnce();
         // Re-validate just this field (lightweight)
         if (input.id === "contactEmail") {
-          setFieldError(input, input.value.trim() && !isValidEmail(input.value) ? "Please enter a valid email address." : "");
+          setFieldError(input, input.value.trim() && !isValidEmail(input.value) ? "올바른 이메일 주소를 입력해 주세요." : "");
         } else if (input.id === "delinquencyRate") {
           setFieldError(
             input,
             input.value.trim() && !isValidDelinquencyRate(input.value)
-              ? "Please enter a valid delinquency rate between 0 and 100 (e.g., 2.4%)."
+              ? "0에서 100 사이의 연체율을 입력해 주세요(예: 2.4%)."
               : ""
           );
         } else if (input.id === "portfolioSize") {
           setFieldError(
             input,
-            input.value.trim() && !isValidPortfolioSize(input.value) ? "Please enter a valid portfolio size (e.g., 250M or 250,000,000)." : ""
+            input.value.trim() && !isValidPortfolioSize(input.value) ? "올바른 포트폴리오 규모를 입력해 주세요(예: 250M 또는 250,000,000)." : ""
           );
         } else if (input.id === "institutionName") {
-          setFieldError(input, input.value.trim() && input.value.trim().length < 2 ? "Please enter your institution name." : "");
+          setFieldError(input, input.value.trim() && input.value.trim().length < 2 ? "기관명을 입력해 주세요." : "");
         } else {
           setFieldError(input, "");
         }
@@ -459,7 +459,7 @@
         setAttributionFromUrl(); // restore url/referrer/utm after reset
       } catch (err) {
         trackEvent("poc_form_submit_failed", { event_category: "engagement", reason: "network" });
-        showError((err && err.message) || "Submission failed. Please try again.");
+        showError((err && err.message) || "전송에 실패했습니다. 잠시 후 다시 시도해 주세요.");
       } finally {
         setSubmitting(false);
       }
