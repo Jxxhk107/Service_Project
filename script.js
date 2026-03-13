@@ -202,6 +202,24 @@
     return ok;
   }
 
+  function trackFormSubmitAnalytics() {
+    try {
+      // GA4 custom event
+      if (typeof window.gtag === "function") {
+        window.gtag("event", "poc_form_submitted", {
+          event_category: "engagement",
+          event_label: "PoC application",
+        });
+      }
+      // Hotjar event
+      if (typeof window.hj === "function") {
+        window.hj("event", "poc_form_submitted");
+      }
+    } catch (_e) {
+      // Analytics should never break UX; ignore errors silently.
+    }
+  }
+
   function showSuccess() {
     if (!successBox) return;
     successBox.hidden = false;
@@ -258,6 +276,7 @@
       }
 
       // MVP: no network request. Treat as successful submission.
+      trackFormSubmitAnalytics();
       showSuccess();
       form.reset();
     });
